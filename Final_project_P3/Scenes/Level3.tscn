@@ -1,0 +1,84 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Scripts/GameManager.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/Elements/Item.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Walls/Yellow_wall.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Walls/Red_wall.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Walls/Blue_wall.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Elements/Ball.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Elements/WinGate.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Timer.tscn" type="PackedScene" id=8]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 621.848, 369.335 )
+
+[node name="Level3" type="Node2D"]
+
+[node name="Ball" parent="." instance=ExtResource( 6 )]
+position = Vector2( 512, 150 )
+
+[node name="WinGate" parent="." instance=ExtResource( 7 )]
+position = Vector2( 512, 150 )
+
+[node name="GameManager" type="Node2D" parent="."]
+script = ExtResource( 1 )
+
+[node name="Yellow_Wall" parent="." instance=ExtResource( 3 )]
+
+[node name="Red_Wall" parent="." instance=ExtResource( 4 )]
+
+[node name="Blue_Wall" parent="." instance=ExtResource( 5 )]
+
+[node name="GameZone" type="Area2D" parent="."]
+visible = false
+position = Vector2( 512, 310 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameZone"]
+position = Vector2( 2.37842, 0 )
+shape = SubResource( 1 )
+
+[node name="Items" type="Node2D" parent="."]
+
+[node name="Item" parent="Items" instance=ExtResource( 2 )]
+position = Vector2( 964, 230 )
+
+[node name="Item2" parent="Items" instance=ExtResource( 2 )]
+position = Vector2( 264, 170 )
+
+[node name="Item3" parent="Items" instance=ExtResource( 2 )]
+position = Vector2( 264, 360 )
+
+[node name="Item4" parent="Items" instance=ExtResource( 2 )]
+position = Vector2( 760, 360 )
+
+[node name="Item5" parent="Items" instance=ExtResource( 2 )]
+position = Vector2( 760, 170 )
+
+[node name="Item6" parent="Items" instance=ExtResource( 2 )]
+position = Vector2( 60, 230 )
+
+[node name="Item7" parent="Items" instance=ExtResource( 2 )]
+position = Vector2( 340, 490 )
+
+[node name="Item8" parent="Items" instance=ExtResource( 2 )]
+position = Vector2( 684, 490 )
+
+[node name="Item9" parent="Items" instance=ExtResource( 2 )]
+position = Vector2( 100, 500 )
+
+[node name="Item10" parent="Items" instance=ExtResource( 2 )]
+position = Vector2( 924, 500 )
+
+[node name="Label" parent="." instance=ExtResource( 8 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 880.0
+margin_top = 25.0
+margin_right = 996.0
+margin_bottom = 58.0
+[connection signal="body_entered" from="WinGate" to="WinGate" method="_on_WinGate_body_entered"]
+[connection signal="end_level" from="WinGate" to="GameManager" method="_on_WinGate_end_level"]
+[connection signal="win_game" from="GameManager" to="WinGate" method="_on_GameManager_win_game"]
+[connection signal="body_exited" from="GameZone" to="GameManager" method="_on_Area2D_body_exited"]

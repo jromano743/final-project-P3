@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/Elements/ShorRectStand.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Elements/Triangle.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Elements/ShortRectangle.tscn" type="PackedScene" id=3]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="RectStand-Left" parent="." instance=ExtResource( 1 )]
+position = Vector2( 9, 380 )
+
+[node name="RectStand-Right" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1015, 380 )
+
+[node name="ShorRect-Left" parent="." instance=ExtResource( 3 )]
+position = Vector2( 270, 415 )
+
+[node name="ShorRect-Right" parent="." instance=ExtResource( 3 )]
+position = Vector2( 754, 415 )
+
+[node name="Triangle-Left" parent="." instance=ExtResource( 2 )]
+position = Vector2( 260, 250 )
+scale = Vector2( 1, -1 )
+
+[node name="Triangle-Right" parent="." instance=ExtResource( 2 )]
+position = Vector2( 764, 250 )
+scale = Vector2( 1, -1 )

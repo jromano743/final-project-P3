@@ -3,7 +3,7 @@
 #### Versión 1.0
 
 ### Primer vistazo
-Color Pinball es un juego de acción mínima en donde el jugador controlará los elementos del escenario para guiar una pelota y que esta recoja todos los elementos coleccionables que existen en el escenario para avanzar de nivel y guardar su récord de nivel.
+Color Pinball es un juego de acción mínima en donde el jugador controlará los elementos del escenario para guiar una pelota y que esta recoja todos los elementos coleccionables que existen en el escenario para avanzar de nivel y guardar su récord de nivel el cual estará indicado por el tiempo que le tomó recolectar los objetos.
 
 ### Concepto general
 El escenario estará cubierto por muchos objetos con figuras geometricas, estos objetos tendrán asociado un color: rojo, amarillo o azul; y una tecla para activar cada uno de estos colores. Al activar cualquier color, el resto de colores se deshabilita. El jugador deberá activar y desactivar los colores siguiendo el movimiento de la pelota y evitando que la misma se escape del mapa mientras recoge 10 objetos coleccionables para pasar de nivel.
@@ -28,8 +28,8 @@ En cuanto a la parte estética se trabajará con una estética neón y música e
 ### Controles
 Cada vez que el jugador active uno de los colores el resto de colores se desactivarán automáticamente.
 - Q -> Activa el color rojo
-- W -> Activa el color amarillo
-- E -> Activa el color azul
+- W -> Activa el color azul
+- E -> Activa el color amarillo
 
 ### Justificación
 El juego busca evocar el lado más competitivo de los gamers ya que requiere de muchos reflejos sortear las diferentes situaciones en el que el caos de la bola puede colocar a los jugadores. Y mucha más habilidad para completarlo.
