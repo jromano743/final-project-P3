@@ -62,10 +62,33 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Salir" type="TextureButton" parent="Control/Botones"]
+[node name="Practica" type="TextureButton" parent="Control/Botones"]
 margin_top = 54.0
 margin_right = 200.0
 margin_bottom = 104.0
+rect_min_size = Vector2( 200, 50 )
+texture_normal = ExtResource( 2 )
+expand = true
+
+[node name="Label" type="Label" parent="Control/Botones/Practica"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -45.5
+margin_top = -12.5
+margin_right = 45.5
+margin_bottom = 12.5
+custom_fonts/font = SubResource( 1 )
+text = "Practica"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Salir" type="TextureButton" parent="Control/Botones"]
+margin_top = 108.0
+margin_right = 200.0
+margin_bottom = 158.0
 rect_min_size = Vector2( 200, 50 )
 texture_normal = ExtResource( 2 )
 expand = true
@@ -85,4 +108,5 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="pressed" from="Control/Botones/Jugar" to="Control" method="_on_Jugar_pressed"]
+[connection signal="pressed" from="Control/Botones/Practica" to="Control" method="_on_Practica_pressed"]
 [connection signal="pressed" from="Control/Botones/Salir" to="Control" method="_on_Salir_pressed"]

@@ -120,6 +120,9 @@ func _input(event):
 		activeWall(yellow_walls)
 		yellow_walls.modulate = Color(255,255,0,1)
 	
+	if event.is_action_pressed("ui_cancel"):
+		change_level = true
+		get_tree().change_scene("res://Scenes/MainMenu.tscn")
 
 func disableWalls():
 	blue_walls.modulate = Color(0,0,255,0.1)
