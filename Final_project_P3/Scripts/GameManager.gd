@@ -55,6 +55,54 @@ func setup_level():
 	disableWalls()
 	activeWall(red_walls)
 	red_walls.modulate = Color(255,0,0,1)
+	
+	#Load data
+	if(int(current_level[5]) != 1):
+		loadData(current_level)
+
+func loadData(name_lvl: String) -> bool:
+	var save_data = File.new()
+	if not save_data.file_exists("user://game_save/levels/scene_%s.save" % name_lvl):
+		print("Archivo "+name_lvl+" no encontrado")
+		return false#11:15
+	
+	save_data.open("user://game_save/levels/scene_%s.save" % name_lvl, File.READ)
+	
+	while(save_data.get_position() < save_data.get_len()):
+		var node_data = parse_json(save_data.get_line())
+		
+		var time = load(node_data["time"])
+		var lives = load(node_data["lives"])
+	
+	save_data.close()
+	print(current_level+": JUEGO CARGADO")
+	return true
+
+func saveData(name_lvl: String) -> void:
+	var file = File.new()#Almacena la informacion
+	var directory: Directory = Directory.new()#indica donde se guardara la informacion
+	
+	directory.make_dir_recursive("user://game_save/levels/")#Creamos la ruta de guardado
+	file.open("user://game_save/levels/scene_%s.save" % name_lvl, File.WRITE)#Abrimos el archivo
+	
+	#var save_nodes = get_tree().get_nodes_in_group("Save") #Nodos que perteneces al grupo Save
+	#var scenes_data = {}   #Diccionario con la info de la escena
+	
+	var scene_data = save()
+	file.store_line(to_json(scene_data))
+	
+	print(current_level+": JUEGO GUARDADO")
+	
+	file.close()
+
+func save():
+	var save_dic: Dictionary = {
+		"filename": filename,
+		"time": current_Time,
+		"lives": lives
+	}
+	
+	return save_dic
 
 func _input(event):
 	if event.is_action_pressed("red_button"):
@@ -91,12 +139,6 @@ func changeLayerMask(wall, mask):
 		for j in sub_nodes:
 			j.set_collision_mask(mask)
 
-func _on_Area2D_body_exited(body):
-	if(not change_level):
-		body.linear_velocity = Vector2.ZERO
-		body.resetPosition()
-	print("Un objeto salio del area")
-
 func _on_Item_item_collected():
 	items = items -1
 	var items_left = "Señal recibida - Items faltantes: " + String(items)
@@ -108,6 +150,7 @@ func _on_Item_item_collected():
 func _on_WinGate_end_level():
 	change_level = true
 	if(next_level <= 3):
+		saveData(current_level)
 		get_tree().change_scene("res://Scenes/Level"+str(next_level)+".tscn")
 	print("Juego terminado")
 
@@ -120,3 +163,9 @@ func set_Final_Time(time):
 	current_Time = time
 	
 	print(current_Time)
+
+func _on_GameZone_body_exited(body):
+	if(not change_level):
+		body.linear_velocity = Vector2.ZERO
+		body.resetPosition()
+	print("Un objeto salio del area")
