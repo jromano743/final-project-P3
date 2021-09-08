@@ -1,0 +1,171 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Scenes/Elements/Ball.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Elements/LongRectangle.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/GameManager.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Elements/ShorRectStand.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Elements/Item.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/Elements/WinGate.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Timer.tscn" type="PackedScene" id=9]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 621.848, 369.335 )
+
+[node name="Level0" type="Node2D"]
+
+[node name="Ball" parent="." instance=ExtResource( 1 )]
+position = Vector2( 512, 150 )
+
+[node name="WinGate" parent="." instance=ExtResource( 7 )]
+position = Vector2( 512, 150 )
+
+[node name="GameManager" parent="." instance=ExtResource( 3 )]
+
+[node name="Yellow_Wall" type="Node2D" parent="."]
+
+[node name="Floor_L" parent="Yellow_Wall" instance=ExtResource( 4 )]
+position = Vector2( 80, 590 )
+rotation = 1.5708
+
+[node name="Floor_R" parent="Yellow_Wall" instance=ExtResource( 4 )]
+position = Vector2( 944, 590 )
+rotation = 1.5708
+
+[node name="Floor" parent="Yellow_Wall" instance=ExtResource( 2 )]
+position = Vector2( 512, 590 )
+
+[node name="Up_L" parent="Yellow_Wall" instance=ExtResource( 4 )]
+position = Vector2( 80, 10 )
+rotation = 1.5708
+
+[node name="Up_R" parent="Yellow_Wall" instance=ExtResource( 4 )]
+position = Vector2( 944, 10 )
+rotation = 1.5708
+
+[node name="Up" parent="Yellow_Wall" instance=ExtResource( 2 )]
+position = Vector2( 512, 10 )
+
+[node name="Left" parent="Yellow_Wall" instance=ExtResource( 2 )]
+position = Vector2( 0, 300 )
+rotation = 1.5708
+
+[node name="Right" parent="Yellow_Wall" instance=ExtResource( 2 )]
+position = Vector2( 1024, 300 )
+rotation = 1.5708
+
+[node name="Red_Wall" type="Node2D" parent="."]
+
+[node name="Floor_L" parent="Red_Wall" instance=ExtResource( 4 )]
+position = Vector2( 80, 590 )
+rotation = 1.5708
+
+[node name="Floor_R" parent="Red_Wall" instance=ExtResource( 4 )]
+position = Vector2( 944, 590 )
+rotation = 1.5708
+
+[node name="Floor" parent="Red_Wall" instance=ExtResource( 2 )]
+position = Vector2( 512, 590 )
+
+[node name="Up_L" parent="Red_Wall" instance=ExtResource( 4 )]
+position = Vector2( 80, 10 )
+rotation = 1.5708
+
+[node name="Up_R" parent="Red_Wall" instance=ExtResource( 4 )]
+position = Vector2( 944, 10 )
+rotation = 1.5708
+
+[node name="Up" parent="Red_Wall" instance=ExtResource( 2 )]
+position = Vector2( 512, 10 )
+
+[node name="Left" parent="Red_Wall" instance=ExtResource( 2 )]
+position = Vector2( 0, 300 )
+rotation = 1.5708
+
+[node name="Right" parent="Red_Wall" instance=ExtResource( 2 )]
+position = Vector2( 1024, 300 )
+rotation = 1.5708
+
+[node name="Blue_Wall" type="Node2D" parent="."]
+
+[node name="Floor_L" parent="Blue_Wall" instance=ExtResource( 4 )]
+position = Vector2( 80, 590 )
+rotation = 1.5708
+
+[node name="Floor_R" parent="Blue_Wall" instance=ExtResource( 4 )]
+position = Vector2( 944, 590 )
+rotation = 1.5708
+
+[node name="Floor" parent="Blue_Wall" instance=ExtResource( 2 )]
+position = Vector2( 512, 590 )
+
+[node name="Up_L" parent="Blue_Wall" instance=ExtResource( 4 )]
+position = Vector2( 80, 10 )
+rotation = 1.5708
+
+[node name="Up_R" parent="Blue_Wall" instance=ExtResource( 4 )]
+position = Vector2( 944, 10 )
+rotation = 1.5708
+
+[node name="Up" parent="Blue_Wall" instance=ExtResource( 2 )]
+position = Vector2( 512, 10 )
+
+[node name="Left" parent="Blue_Wall" instance=ExtResource( 2 )]
+position = Vector2( 0, 300 )
+rotation = 1.5708
+
+[node name="Right" parent="Blue_Wall" instance=ExtResource( 2 )]
+position = Vector2( 1024, 300 )
+rotation = 1.5708
+
+[node name="GameZone" type="Area2D" parent="."]
+visible = false
+position = Vector2( 512, 310 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameZone"]
+position = Vector2( 2.37842, 0 )
+shape = SubResource( 1 )
+
+[node name="Items" type="Node2D" parent="."]
+
+[node name="Item" parent="Items" instance=ExtResource( 6 )]
+position = Vector2( 436, 530 )
+
+[node name="Item2" parent="Items" instance=ExtResource( 6 )]
+position = Vector2( 588, 530 )
+
+[node name="Item3" parent="Items" instance=ExtResource( 6 )]
+position = Vector2( 150, 530 )
+
+[node name="Item4" parent="Items" instance=ExtResource( 6 )]
+position = Vector2( 874, 530 )
+
+[node name="Item5" parent="Items" instance=ExtResource( 6 )]
+position = Vector2( 333, 350 )
+
+[node name="Item6" parent="Items" instance=ExtResource( 6 )]
+position = Vector2( 624, 75 )
+
+[node name="Item7" parent="Items" instance=ExtResource( 6 )]
+position = Vector2( 691, 350 )
+
+[node name="Item8" parent="Items" instance=ExtResource( 6 )]
+position = Vector2( 75, 145 )
+
+[node name="Item9" parent="Items" instance=ExtResource( 6 )]
+position = Vector2( 949, 145 )
+
+[node name="Item10" parent="Items" instance=ExtResource( 6 )]
+position = Vector2( 400, 75 )
+
+[node name="Label" parent="." instance=ExtResource( 9 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 880.0
+margin_top = 25.0
+margin_right = 996.0
+margin_bottom = 58.0
+[connection signal="body_entered" from="WinGate" to="WinGate" method="_on_WinGate_body_entered"]
+[connection signal="win_game" from="GameManager" to="WinGate" method="_on_GameManager_win_game"]
+[connection signal="body_exited" from="GameZone" to="GameManager" method="_on_GameZone_body_exited"]

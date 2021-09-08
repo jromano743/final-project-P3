@@ -28,7 +28,8 @@ func _on_Time_Stop():
 func _on_Time_Reset():
 	time = 0
 
+func get_time():
+	return time
 
-func _on_WinGate_end_level():
-	_on_Time_Stop()
-	var node_game_manager = get_node("/root/"+str(current_level)+"/GameManager").set_Final_Time(time)
+func set_time(curren_time):
+	time = curren_time

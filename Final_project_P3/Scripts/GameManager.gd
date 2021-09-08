@@ -57,33 +57,36 @@ func setup_level():
 	red_walls.modulate = Color(255,0,0,1)
 	
 	#Load data
-	if(int(current_level[5]) != 1):
-		loadData(current_level)
+	if(int(current_level[5]) > 1):
+		loadData()
+		get_node("/root/"+str(current_level)+"/Label").set_time(current_Time)
 
-func loadData(name_lvl: String) -> bool:
+func loadData() -> bool:
 	var save_data = File.new()
-	if not save_data.file_exists("user://game_save/levels/scene_%s.save" % name_lvl):
-		print("Archivo "+name_lvl+" no encontrado")
+	if not save_data.file_exists("user://game_save/levels/data.save"):
+		print("Archivo de guardado no encontrado")
 		return false#11:15
 	
-	save_data.open("user://game_save/levels/scene_%s.save" % name_lvl, File.READ)
+	save_data.open("user://game_save/levels/data.save", File.READ)
 	
 	while(save_data.get_position() < save_data.get_len()):
 		var node_data = parse_json(save_data.get_line())
 		
-		var time = load(node_data["time"])
-		var lives = load(node_data["lives"])
+		current_Time = node_data["time"]
+		lives = node_data["lives"]
+		
+		print(current_Time, lives)
 	
 	save_data.close()
 	print(current_level+": JUEGO CARGADO")
 	return true
 
-func saveData(name_lvl: String) -> void:
+func saveData() -> void:
 	var file = File.new()#Almacena la informacion
 	var directory: Directory = Directory.new()#indica donde se guardara la informacion
 	
 	directory.make_dir_recursive("user://game_save/levels/")#Creamos la ruta de guardado
-	file.open("user://game_save/levels/scene_%s.save" % name_lvl, File.WRITE)#Abrimos el archivo
+	file.open("user://game_save/levels/data.save", File.WRITE)#Abrimos el archivo
 	
 	#var save_nodes = get_tree().get_nodes_in_group("Save") #Nodos que perteneces al grupo Save
 	#var scenes_data = {}   #Diccionario con la info de la escena
@@ -142,7 +145,7 @@ func changeLayerMask(wall, mask):
 func _on_Item_item_collected():
 	items = items -1
 	var items_left = "Señal recibida - Items faltantes: " + String(items)
-	print(items_left)
+	#print(items_left)
 	if(items <= 0):
 		emit_signal("win_game")
 
@@ -150,8 +153,10 @@ func _on_Item_item_collected():
 func _on_WinGate_end_level():
 	change_level = true
 	if(next_level <= 3):
-		saveData(current_level)
+		current_Time = get_node("/root/"+str(current_level)+"/Label").get_time()
+		saveData()
 		get_tree().change_scene("res://Scenes/Level"+str(next_level)+".tscn")
+		print(current_Time)
 	print("Juego terminado")
 
 func set_Final_Time(time):
