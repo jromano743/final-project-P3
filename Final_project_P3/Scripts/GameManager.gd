@@ -14,6 +14,7 @@ var lives = 5
 #Level Data
 var items = 10
 var current_level
+var current_level_number
 var next_level
 
 #Persistens data
@@ -25,6 +26,12 @@ var score
 #Flag
 var change_level
 
+#Hud items
+var hud_lives
+var hud_circle
+var hud_time
+var hud_level
+
 signal win_game
 
 # Called when the node enters the scene tree for the first time.
@@ -33,7 +40,8 @@ func _ready():
 
 func setup_level():
 	current_level = get_tree().get_current_scene().get_name()
-	next_level = int(current_level[5]) + 1
+	current_level_number = int(current_level[5])
+	next_level = current_level_number + 1
 	
 	#Flags
 	change_level = false
@@ -41,9 +49,20 @@ func setup_level():
 	#Toma la pelota
 	ball = get_parent().get_node("Ball")
 	
+	#HUD
+	hud_time = get_node("/root/"+current_level+"/HUD/Time")
+	hud_lives = get_node("/root/"+current_level+"/HUD/Lives")
+	hud_circle = get_node("/root/"+current_level+"/HUD/Circle")
+	hud_level = get_node("/root/"+current_level+"/HUD/Level")
+	
+	#HUD Setup
+	hud_level.text = "Level: " + str(current_level_number)
+	hud_lives.text = "Lives: " + str(lives)
+	
 	#Toma todos los nodos con los que la pelota debe chocar
 	red_walls = get_parent().get_node("Red_Wall")
 	red_walls.modulate = Color(255,0,0,1)
+	hud_circle.modulate = Color(255,0,0,1)
 	
 	blue_walls = get_parent().get_node("Blue_Wall")
 	blue_walls.modulate = Color(0,0,255,1)
@@ -59,7 +78,8 @@ func setup_level():
 	#Load data
 	if(int(current_level[5]) > 1):
 		loadData()
-		get_node("/root/"+str(current_level)+"/Label").set_time(current_Time)
+		hud_time.set_time(current_Time)
+		hud_lives.text = "Lives: " + str(lives)
 
 func loadData() -> bool:
 	var save_data = File.new()
@@ -91,14 +111,14 @@ func saveData() -> void:
 	#var save_nodes = get_tree().get_nodes_in_group("Save") #Nodos que perteneces al grupo Save
 	#var scenes_data = {}   #Diccionario con la info de la escena
 	
-	var scene_data = save()
+	var scene_data = make_data()
 	file.store_line(to_json(scene_data))
 	
 	print(current_level+": JUEGO GUARDADO")
 	
 	file.close()
 
-func save():
+func make_data():
 	var save_dic: Dictionary = {
 		"filename": filename,
 		"time": current_Time,
@@ -111,18 +131,22 @@ func _input(event):
 	if event.is_action_pressed("red_button"):
 		activeWall(red_walls)
 		red_walls.modulate = Color(255,0,0,1)
+		hud_circle.modulate = Color(255,0,0,1)
 	
 	if event.is_action_pressed("blue_button"):
 		activeWall(blue_walls)
 		blue_walls.modulate = Color(0,0,255,1)
+		hud_circle.modulate = Color(0,0,255,1)
 	
 	if event.is_action_pressed("yellow_button"):
 		activeWall(yellow_walls)
 		yellow_walls.modulate = Color(255,255,0,1)
+		hud_circle.modulate = Color(255,255,0,1)
 	
 	if event.is_action_pressed("ui_cancel"):
 		change_level = true
 		get_tree().change_scene("res://Scenes/MainMenu.tscn")
+	
 
 func disableWalls():
 	blue_walls.modulate = Color(0,0,255,0.1)
@@ -155,11 +179,11 @@ func _on_Item_item_collected():
 #Programar el cambio de escena del juego
 func _on_WinGate_end_level():
 	change_level = true
+	lives += 1
 	if(next_level <= 3):
-		current_Time = get_node("/root/"+str(current_level)+"/Label").get_time()
+		current_Time = hud_time.get_time()
 		saveData()
 		get_tree().change_scene("res://Scenes/Level"+str(next_level)+".tscn")
-		print(current_Time)
 	print("Juego terminado")
 
 func set_Final_Time(time):
@@ -176,4 +200,6 @@ func _on_GameZone_body_exited(body):
 	if(not change_level):
 		body.linear_velocity = Vector2.ZERO
 		body.resetPosition()
+		lives -= 1
+		hud_lives.text = "Lives: " + str(lives)
 	print("Un objeto salio del area")
