@@ -6,8 +6,8 @@
 [ext_resource path="res://Scenes/Elements/ShorRectStand.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/Elements/SideTriangle.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Elements/Item.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/Elements/Triangle.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Scenes/Timer.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/Elements/ShortRectangle.tscn" type="PackedScene" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -187,13 +187,5 @@ position = Vector2( 949, 145 )
 [node name="Item10" parent="Items" instance=ExtResource( 6 )]
 position = Vector2( 400, 75 )
 
-[node name="Label" parent="." instance=ExtResource( 9 )]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 880.0
-margin_top = 25.0
-margin_right = 996.0
-margin_bottom = 58.0
+[node name="HUD" parent="." instance=ExtResource( 7 )]
 [connection signal="body_exited" from="GameZone" to="GameManager" method="_on_GameZone_body_exited"]

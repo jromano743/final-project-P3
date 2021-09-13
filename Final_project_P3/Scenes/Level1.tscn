@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scenes/Elements/Ball.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Elements/LongRectangle.tscn" type="PackedScene" id=2]
@@ -13,9 +13,39 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 621.848, 369.335 )
 
-[node name="Level1" type="Node2D"]
+[sub_resource type="GDScript" id=2]
+script/source = "extends Node
 
-[node name="HUD" parent="." instance=ExtResource( 9 )]
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+var bar #Barra
+var circle #Circulo
+var lives #Vidas
+var level #Level
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	bar = get_node(\"./Bar\")
+	circle = get_node(\"./Circle\")
+	lives = get_node(\"./Lives\")
+	level = get_node(\"./Level\")
+	
+	
+	print(bar)
+	print(circle)
+	print(lives)
+	print(level.text)
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+"
+
+[node name="Level1" type="Node2D"]
 
 [node name="Ball" parent="." instance=ExtResource( 1 )]
 position = Vector2( 512, 150 )
@@ -135,6 +165,9 @@ position = Vector2( 949, 145 )
 
 [node name="Item10" parent="Items" instance=ExtResource( 6 )]
 position = Vector2( 400, 75 )
+
+[node name="HUD" type="Node2D" parent="." instance=ExtResource( 9 )]
+script = SubResource( 2 )
 [connection signal="body_entered" from="WinGate" to="WinGate" method="_on_WinGate_body_entered"]
 [connection signal="win_game" from="GameManager" to="WinGate" method="_on_GameManager_win_game"]
 [connection signal="body_exited" from="GameZone" to="GameManager" method="_on_GameZone_body_exited"]

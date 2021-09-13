@@ -4,12 +4,11 @@ var time = 0
 var time_on = true
 var current_level
 
-# Called when the node enters the scene tree for the first time.
-
 func _ready():
-		current_level = get_tree().get_current_scene().get_name()
+	current_level = get_tree().get_current_scene().get_name()
 
 func _process(delta):
+	#Mientras el reloj funcione, lo actualiza
 	if(time_on):
 		time += delta;
 	
@@ -19,17 +18,22 @@ func _process(delta):
 	var time_passed = "Time: %02d : %02d" % [mins, secs]
 	text = time_passed
 
+#Enciende el reloj
 func _on_Time_Start():
 	time_on = true
 
+#Apaga el reloj
 func _on_Time_Stop():
 	time_on = false
 
+#Reinicia el reloj
 func _on_Time_Reset():
 	time = 0
 
+#Devuelve el tiempo actual del reloj
 func get_time():
 	return time
 
+#Establece el tiempo actual
 func set_time(curren_time):
 	time = curren_time
