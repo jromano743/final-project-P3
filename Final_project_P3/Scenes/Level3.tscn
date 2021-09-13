@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scenes/GameManager.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Elements/Item.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Scenes/Elements/Ball.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Elements/WinGate.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/Elements/AudioManager.tscn" type="PackedScene" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 621.848, 369.335 )
@@ -69,6 +70,8 @@ position = Vector2( 100, 500 )
 position = Vector2( 924, 500 )
 
 [node name="HUD" parent="." instance=ExtResource( 8 )]
+
+[node name="AudioManager" parent="." instance=ExtResource( 9 )]
 [connection signal="body_entered" from="WinGate" to="WinGate" method="_on_WinGate_body_entered"]
 [connection signal="win_game" from="GameManager" to="WinGate" method="_on_GameManager_win_game"]
 [connection signal="body_exited" from="GameZone" to="GameManager" method="_on_GameZone_body_exited"]
