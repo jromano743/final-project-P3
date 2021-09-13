@@ -61,19 +61,19 @@ func setup_level():
 	
 	#Toma todos los nodos con los que la pelota debe chocar
 	red_walls = get_parent().get_node("Red_Wall")
-	red_walls.modulate = Color(255,0,0,1)
-	hud_circle.modulate = Color(255,0,0,1)
+	red_walls.modulate = Color(2,0,0,1)
+	hud_circle.modulate = Color(2,0,0,1)
 	
 	blue_walls = get_parent().get_node("Blue_Wall")
-	blue_walls.modulate = Color(0,0,255,1)
+	blue_walls.modulate = Color(0,0,2,1)
 	
 	yellow_walls = get_parent().get_node("Yellow_Wall")
-	yellow_walls.modulate = Color(255,255,0,1)
+	yellow_walls.modulate = Color(2,2,0,1)
 	
 	#Configuracion inicial del nivel
 	disableWalls()
 	activeWall(red_walls)
-	red_walls.modulate = Color(255,0,0,1)
+	red_walls.modulate = Color(2,0,0,1)
 	
 	#Load data
 	if(int(current_level[5]) > 1):
@@ -130,18 +130,18 @@ func make_data():
 func _input(event):
 	if event.is_action_pressed("red_button"):
 		activeWall(red_walls)
-		red_walls.modulate = Color(255,0,0,1)
-		hud_circle.modulate = Color(255,0,0,1)
+		red_walls.modulate = Color(2,0,0,1)
+		hud_circle.modulate = Color(2,0,0,1)
 	
 	if event.is_action_pressed("blue_button"):
 		activeWall(blue_walls)
-		blue_walls.modulate = Color(0,0,255,1)
-		hud_circle.modulate = Color(0,0,255,1)
+		blue_walls.modulate = Color(0,0,2,1)
+		hud_circle.modulate = Color(0,0,2,1)
 	
 	if event.is_action_pressed("yellow_button"):
 		activeWall(yellow_walls)
-		yellow_walls.modulate = Color(255,255,0,1)
-		hud_circle.modulate = Color(255,255,0,1)
+		yellow_walls.modulate = Color(2,2,0,1)
+		hud_circle.modulate = Color(2,2,0,1)
 	
 	if event.is_action_pressed("ui_cancel"):
 		change_level = true
