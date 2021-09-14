@@ -2,6 +2,9 @@ extends Node
 
 
 # Declare member variables here. Examples:
+#Audio manager
+var audio_manager
+
 #Walls
 var blue_walls
 var red_walls
@@ -33,16 +36,31 @@ var hud_circle
 var hud_time
 var hud_level
 
+#Sonidos
+var music_level = load("res://Sounds/music_level.wav")
+var sound_lost = load("res://Sounds/lost.wav")
+var sound_end_level = load("res://Sounds/end-level.wav")
+var sound_all_items = load("res://Sounds/all-item.wav")
+var music_menu = load("res://Sounds/menu_music.wav")
+
+#Señales
 signal win_game
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	setup_level()
+	current_level = get_tree().get_current_scene().get_name()
+	current_level_number = int(current_level[5])
+	
+	#Audio manager
+	audio_manager = get_node("/root/"+str(current_level)+"/AudioManager")
+	
+	if current_level_number != 4:
+		setup_level()
+	else:
+		setup_end()
 
 #Configuracion inicial del nivel
 func setup_level():
-	current_level = get_tree().get_current_scene().get_name()
-	current_level_number = int(current_level[5])
 	next_level = current_level_number + 1
 	
 	#Flags
@@ -78,6 +96,8 @@ func setup_level():
 	activeWall(red_walls)
 	red_walls.modulate = Color(2,0,0,1)
 	
+	audio_manager.play_music(music_level)
+	
 	if(current_level_number == 0):
 		hud_level.text = "Practice Level"
 		hud_lives.text = " "
@@ -87,6 +107,18 @@ func setup_level():
 		loadData()
 		hud_time.set_time(current_Time)
 		hud_lives.text = "Lives: " + str(lives)
+
+#Configuracion de pantalla final
+func setup_end():
+	loadData()
+	var secs = fmod(current_Time, 60)
+	var mins = fmod(current_Time, 60*60) / 60
+	var time_passed = "Time: %02d : %02d" % [mins, secs]
+	
+	get_node("/root/"+current_level+"/Score").text = "You score: " + str(time_passed)
+	get_node("/root/"+current_level+"/Goal").text = "You end lives: " + str(lives)
+	
+	audio_manager.play_music(music_menu)
 
 #Carga de datos (si existen), para el nivel
 func loadData() -> bool:
@@ -214,8 +246,14 @@ func set_Final_Time(time):
 #Evento que se activa cuando la pelota abandona el area 2D
 func _on_GameZone_body_exited(body):
 	if(not change_level):
-		body.linear_velocity = Vector2.ZERO
-		body.resetPosition()
-		lives -= 1
-		hud_lives.text = "Lives: " + str(lives)
+		if lives > 0:
+			body.linear_velocity = Vector2.ZERO
+			body.resetPosition()
+			audio_manager.play_sfx(sound_lost)
+			lives -= 1
+			hud_lives.text = "Lives: " + str(lives)
+		else:
+			audio_manager.play_sfx(sound_end_level)
+			body.queue_free()
+			hud_time.time_Stop()
 	print("Un objeto salio del area")

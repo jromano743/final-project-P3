@@ -19,15 +19,15 @@ func _process(delta):
 	text = time_passed
 
 #Enciende el reloj
-func _on_Time_Start():
+func time_Start():
 	time_on = true
 
 #Apaga el reloj
-func _on_Time_Stop():
+func time_Stop():
 	time_on = false
 
 #Reinicia el reloj
-func _on_Time_Reset():
+func time_Reset():
 	time = 0
 
 #Devuelve el tiempo actual del reloj

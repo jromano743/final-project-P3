@@ -1,8 +1,13 @@
 extends Node
 
-# Called when the node enters the scene tree for the first time.
+var music_menu = load("res://Sounds/menu_music.wav")
+var audio_manager
+
 func _ready():
-	pass # Replace with function body.
+	var current_level = get_tree().get_current_scene().get_name()
+	audio_manager = get_node("/root/"+str(current_level)+"/AudioManager")
+	
+	audio_manager.play_music(music_menu)
 
 #Botones del menu
 func _on_Jugar_pressed():

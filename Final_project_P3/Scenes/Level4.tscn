@@ -1,0 +1,91 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/GameManager.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Elements/AudioManager.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Fonts/Mister Pixel Regular.otf" type="DynamicFontData" id=11]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 11 )
+
+[node name="Level4" type="Node2D"]
+
+[node name="Congratulations" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 378.568
+margin_top = 76.2582
+margin_right = 617.568
+margin_bottom = 109.258
+custom_fonts/font = SubResource( 1 )
+text = "Congratulations!!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Score" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 518.894
+margin_top = 195.436
+margin_right = 756.894
+margin_bottom = 237.436
+custom_fonts/font = SubResource( 1 )
+text = "You Score: 00:00"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="Label" parent="."]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 264.004
+margin_top = 556.698
+margin_right = 740.004
+margin_bottom = 589.698
+custom_fonts/font = SubResource( 1 )
+text = "Press ESC to return to Main Menu"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Goal" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 257.269
+margin_top = 197.125
+margin_right = 486.269
+margin_bottom = 238.125
+custom_fonts/font = SubResource( 1 )
+text = "You end lives: 5"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Win" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 341.702
+margin_top = 366.101
+margin_right = 670.702
+margin_bottom = 471.101
+custom_fonts/font = SubResource( 1 )
+text = "Thanks for playing.
+Try complete the game 
+with 5 lives"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameManager" parent="." instance=ExtResource( 3 )]
+
+[node name="AudioManager" parent="." instance=ExtResource( 9 )]

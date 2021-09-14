@@ -33,3 +33,12 @@ Cada vez que el jugador active uno de los colores el resto de colores se desacti
 
 ### Justificación
 El juego busca evocar el lado más competitivo de los gamers ya que requiere de muchos reflejos sortear las diferentes situaciones en el que el caos de la bola puede colocar a los jugadores. Y mucha más habilidad para completarlo.
+
+## Assets
+Font: Mister Pixel
+By: **Christophe Badani**
+Asset Web: [Behance](https://www.behance.net/badani)
+
+Musica: Before the Countdown 
+By: **Maarten Schellekens**
+Asset Web: [Free Music Archive](https://freemusicarchive.org/music/maarten-schellekens/single/before-the-countdown)
