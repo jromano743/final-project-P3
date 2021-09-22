@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Fonts/Mister Pixel Regular.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Sprites/button.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/bg_test.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/Menu.gd" type="Script" id=4]
 [ext_resource path="res://Scenes/Elements/AudioManager.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Sprites/Colo Pinball Title.png" type="Texture" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 size = 24
@@ -30,6 +31,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Color Pinball Title" type="Sprite" parent="Control"]
+position = Vector2( 512, 175 )
+scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 6 )
+
 [node name="Botones" type="VBoxContainer" parent="Control"]
 anchor_left = 0.5
 anchor_top = 0.5
@@ -44,7 +50,7 @@ __meta__ = {
 }
 
 [node name="Jugar" type="TextureButton" parent="Control/Botones"]
-modulate = Color( 0.458824, 0.815686, 0.85098, 1 )
+modulate = Color( 0.564706, 0.564706, 0.564706, 1 )
 margin_right = 200.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 200, 50 )
@@ -68,7 +74,7 @@ __meta__ = {
 }
 
 [node name="Practica" type="TextureButton" parent="Control/Botones"]
-modulate = Color( 0.458824, 0.815686, 0.85098, 1 )
+modulate = Color( 0.564706, 0.564706, 0.564706, 1 )
 margin_top = 54.0
 margin_right = 200.0
 margin_bottom = 104.0
@@ -93,7 +99,7 @@ __meta__ = {
 }
 
 [node name="Salir" type="TextureButton" parent="Control/Botones"]
-modulate = Color( 0.458824, 0.815686, 0.85098, 1 )
+modulate = Color( 0.564706, 0.564706, 0.564706, 1 )
 margin_top = 108.0
 margin_right = 200.0
 margin_bottom = 158.0
