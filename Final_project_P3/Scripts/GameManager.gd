@@ -30,7 +30,7 @@ var score
 #Flag
 var change_level
 var game_over: bool = false
-var exit: bool = false
+var exit_game: bool = false
 
 #Hud - Hud items
 var hud
@@ -58,7 +58,7 @@ func _ready():
 	#Audio manager
 	audio_manager = get_node("/root/"+str(current_level)+"/AudioManager")
 	
-	if current_level_number != 4:
+	if "evel" in current_level:
 		setup_level()
 	else:
 		setup_end()
@@ -191,11 +191,8 @@ func _input(event):
 		hud_circle.modulate = Color(2,2,0,1)
 	
 	if event.is_action_pressed("ui_cancel"):
-		change_level = true
-		exit = true
-		if(ball):
-			ball.queue_free()
-		emit_signal("end_level")
+		exit_game = true
+		prepare_transition()
 
 #Deshabilita los muros (color y colisiones)
 func disableWalls():
@@ -237,9 +234,14 @@ func _on_WinGate_end_level():
 
 #Funcion que prepara los datos para la transicion a otra escena
 func prepare_transition():
-	if(ball): ball.queue_free()
-	current_Time = hud_time.get_time()
-	saveData()
+	if ball: 
+		ball.queue_free()
+	var name_scene = get_tree().get_current_scene().get_name()
+	print(name_scene)
+	if (not ("GameWin" in name_scene or "GameOver" in name_scene)):
+		hud_time.time_Stop()
+		current_Time = hud_time.get_time()
+		saveData()
 	emit_signal("end_level")
 	print("Preparacion completa")
 
@@ -256,6 +258,7 @@ func set_Final_Time(time):
 
 #Evento que se activa cuando la pelota abandona el area 2D
 func _on_GameZone_body_exited(body):
+	if exit_game: return
 	if(not change_level):
 		if lives > 1:
 			body.linear_velocity = Vector2.ZERO
@@ -274,12 +277,20 @@ func _on_GameZone_body_exited(body):
 	print("Un objeto salio del area")
 
 func change_Level():
-	if(not exit and not game_over and next_level <= MAX_LEVELS):
-		get_tree().change_scene("res://Scenes/Level"+str(next_level)+".tscn")
-	elif (game_over or next_level > MAX_LEVELS):
-		get_tree().change_scene("res://Scenes/GameOver.tscn")
-	else:
+	#ESC is Pressed
+	print(exit_game)
+	if(exit_game): 
+		print("Pasa por el cambio al menu principal")
 		get_tree().change_scene("res://Scenes/MainMenu.tscn")
+		return
+	
+	#Change Level in Game
+	if(not game_over and next_level <= MAX_LEVELS):
+		get_tree().change_scene("res://Scenes/Level"+str(next_level)+".tscn")
+	elif (not game_over and next_level > MAX_LEVELS):
+		get_tree().change_scene("res://Scenes/GameWin.tscn")
+	else:
+		get_tree().change_scene("res://Scenes/GameOver.tscn")
 
 func _on_TransitionScreen_finish_fade_out():
 	print("Transicion Finalizada")
