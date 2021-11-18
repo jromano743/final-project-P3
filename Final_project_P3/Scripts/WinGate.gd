@@ -22,7 +22,7 @@ func _on_Item_win_game():
 	pass
 
 func _on_GameManager_win_game():
-	print("Win game - Señal recibida - Todos los items fueron recolectados")
+	print("Win GATE: Señal recibida - Todos los items fueron recolectados")
 	all_items_collected = true
 
 func _on_WinGate_body_entered(body):

@@ -233,17 +233,15 @@ func _on_Item_item_collected():
 func _on_WinGate_end_level():
 	change_level = true
 	lives += 1
-	if(not game_over and next_level <= MAX_LEVELS):
-		current_Time = hud_time.get_time()
-		saveData()
-		emit_signal("end_level")
-		ball.queue_free()
-	else:
-		current_Time = hud_time.get_time()
-		saveData()
-		emit_signal("end_level")
-		ball.queue_free()
-	print("Juego terminado")
+	prepare_transition()
+
+#Funcion que prepara los datos para la transicion a otra escena
+func prepare_transition():
+	if(ball): ball.queue_free()
+	current_Time = hud_time.get_time()
+	saveData()
+	emit_signal("end_level")
+	print("Preparacion completa")
 
 #Evento que establece el tiempo del game manager con el mismo del reloj (reloj->manager)
 func set_Final_Time(time):
@@ -266,13 +264,13 @@ func _on_GameZone_body_exited(body):
 			lives -= 1
 			hud_lives.text = "Lives: " + str(lives)
 		else:
-			audio_manager.play_sfx(sound_end_level)
-			body.queue_free()
 			hud_time.time_Stop()
+			body.queue_free()
+			audio_manager.play_sfx(sound_end_level)
 			lives -= 1
 			hud_lives.text = "Lives: " + str(lives)
 			game_over = true
-			emit_signal("end_level")
+			prepare_transition()
 	print("Un objeto salio del area")
 
 func change_Level():
