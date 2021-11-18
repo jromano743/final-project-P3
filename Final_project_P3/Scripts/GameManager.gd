@@ -15,10 +15,11 @@ var ball
 var lives = 5
 
 #Level Data
-var items = 10
+var items = 1
 var current_level
 var current_level_number
 var next_level
+var MAX_LEVELS = 3
 
 #Persistens data
 var current_Time
@@ -28,6 +29,8 @@ var score
 
 #Flag
 var change_level
+var game_over: bool = false
+var exit: bool = false
 
 #Hud - Hud items
 var hud
@@ -45,6 +48,7 @@ var music_menu = load("res://Sounds/menu_music.wav")
 
 #Señales
 signal win_game
+signal end_level
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -125,7 +129,7 @@ func loadData() -> bool:
 	var save_data = File.new()
 	if not save_data.file_exists("user://game_save/levels/data.save"):
 		print("Archivo de guardado no encontrado")
-		return false#11:15
+		return false
 	
 	save_data.open("user://game_save/levels/data.save", File.READ)
 	
@@ -188,7 +192,10 @@ func _input(event):
 	
 	if event.is_action_pressed("ui_cancel"):
 		change_level = true
-		get_tree().change_scene("res://Scenes/MainMenu.tscn")
+		exit = true
+		if(ball):
+			ball.queue_free()
+		emit_signal("end_level")
 
 #Deshabilita los muros (color y colisiones)
 func disableWalls():
@@ -226,10 +233,16 @@ func _on_Item_item_collected():
 func _on_WinGate_end_level():
 	change_level = true
 	lives += 1
-	if(next_level <= 3):
+	if(not game_over and next_level <= MAX_LEVELS):
 		current_Time = hud_time.get_time()
 		saveData()
-		get_tree().change_scene("res://Scenes/Level"+str(next_level)+".tscn")
+		emit_signal("end_level")
+		ball.queue_free()
+	else:
+		current_Time = hud_time.get_time()
+		saveData()
+		emit_signal("end_level")
+		ball.queue_free()
 	print("Juego terminado")
 
 #Evento que establece el tiempo del game manager con el mismo del reloj (reloj->manager)
@@ -246,7 +259,7 @@ func set_Final_Time(time):
 #Evento que se activa cuando la pelota abandona el area 2D
 func _on_GameZone_body_exited(body):
 	if(not change_level):
-		if lives > 0:
+		if lives > 1:
 			body.linear_velocity = Vector2.ZERO
 			body.resetPosition()
 			audio_manager.play_sfx(sound_lost)
@@ -256,4 +269,20 @@ func _on_GameZone_body_exited(body):
 			audio_manager.play_sfx(sound_end_level)
 			body.queue_free()
 			hud_time.time_Stop()
+			lives -= 1
+			hud_lives.text = "Lives: " + str(lives)
+			game_over = true
+			emit_signal("end_level")
 	print("Un objeto salio del area")
+
+func change_Level():
+	if(not exit and not game_over and next_level <= MAX_LEVELS):
+		get_tree().change_scene("res://Scenes/Level"+str(next_level)+".tscn")
+	elif (game_over or next_level > MAX_LEVELS):
+		get_tree().change_scene("res://Scenes/GameOver.tscn")
+	else:
+		get_tree().change_scene("res://Scenes/MainMenu.tscn")
+
+func _on_TransitionScreen_finish_fade_out():
+	print("Transicion Finalizada")
+	change_Level()
