@@ -15,7 +15,7 @@ var ball
 var lives = 5
 
 #Level Data
-var items = 1
+var items = 10
 var current_level
 var current_level_number
 var next_level
@@ -117,10 +117,10 @@ func setup_end():
 	loadData()
 	var secs = fmod(current_Time, 60)
 	var mins = fmod(current_Time, 60*60) / 60
-	var time_passed = "Time: %02d : %02d" % [mins, secs]
+	var time_passed = "%02d : %02d" % [mins, secs]
 	
-	get_node("/root/"+current_level+"/Score").text = "You score: " + str(time_passed)
-	get_node("/root/"+current_level+"/Goal").text = "You end lives: " + str(lives)
+	get_node("/root/"+current_level+"/Score").text = "Time: " + str(time_passed)
+	get_node("/root/"+current_level+"/Goal").text = "Lives: " + str(lives)
 	
 	audio_manager.play_music(music_menu)
 
